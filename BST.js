@@ -507,13 +507,36 @@ if (nodeArray.includes("NOT BALANCED!")) {
   return "balanced."
 }
 
-
-
  }
 
 rebalance() {
 
-  // I tried to unbalance my tree, skewing the value of numbers in the array, but it never unbalanced. My isBalanced function was correctly identifying whether a tree was balanced, so that was not the problem.
+let array = []
+
+this.inOrderForEach(node => array.push(node.value))  
+
+          
+const uniqueArray = [...new Set(array)]
+
+let middleIndex = Math.floor(uniqueArray.length / 2)  // Finds median number in an array
+const median = uniqueArray[middleIndex]
+
+let root = new Node(median)
+
+const higher = uniqueArray.slice(middleIndex + 1)
+const lower = uniqueArray.slice(0, middleIndex)  
+
+
+
+// if a number in higher or lower is higher or lower than a node, it goes to the right or left of that node
+
+            root.right = this.buildTree(higher) // anything higher than the root
+            root.left =  this.buildTree(lower) // anything lower than the root
+            
+            
+            this.root = root
+            return this.root
+
   
   
 }
@@ -523,10 +546,21 @@ rebalance() {
 
 
        const test = new BST([1, 3, 4, 7, 5, 7, 67, 8, 9, 6345, 324, 4, 9])
+       test.insert(5000)
+       test.insert(6000)
+       test.insert(7000)
+       test.insert(58000)
+       test.insert(10000)
+       test.insert(9000)
+       test.insert(5000)
+       test.insert(8000)
+       test.insert(57000)
 
        // console.log(test.postOrderForEach(node => console.log(node.value)))
         
         //console.log(test.rebalance())
+        
+        console.log(test.rebalance())
         console.log(test.isBalanced())
 
      
